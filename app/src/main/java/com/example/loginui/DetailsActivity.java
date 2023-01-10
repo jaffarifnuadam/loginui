@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.loginui.adapter.DetailsAdapter;
-import com.example.loginui.adapter.PlayerAdapter;
 import com.example.loginui.databinding.ActivityDetailsBinding;
 import com.example.loginui.model.PlayerModel;
 import com.example.loginui.viewmodel.DetailViewModel;
@@ -34,14 +33,6 @@ public class DetailsActivity extends AppCompatActivity implements LifecycleOwner
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Details");
 
-
-        playerModels = new ArrayList<>();
-        playerModels.add(new PlayerModel("Dhoni", getResources().getString(R.string.dhoni_description)));
-        playerModels.add(new PlayerModel("Hardik", getResources().getString(R.string.hardik_description)));
-        playerModels.add(new PlayerModel("Rahul", getResources().getString(R.string.rahul_description)));
-        playerModels.add(new PlayerModel("Virat", getResources().getString(R.string.virat_description)));
-        playerModels.add(new PlayerModel("Yuvraj", getResources().getString(R.string.yuvaraj_description)));
-
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager layoutManager_1
@@ -61,16 +52,6 @@ public class DetailsActivity extends AppCompatActivity implements LifecycleOwner
         detailsBinding.recyclerViewPodcasts.setLayoutManager(layoutManager_4);
         detailsBinding.recyclerViewDoorHealth.setLayoutManager(layoutManager_5);
 
-
-
-        detailsBinding.txtSeeAllDiagnostics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailsActivity.this,SeeAllActivity.class);
-                startActivity(intent);
-            }
-        });
-
         DetailViewModel viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
         viewModel.getUserMutableLiveData().observe(this, new Observer<ArrayList<PlayerModel>>() {
             @Override
@@ -85,5 +66,37 @@ public class DetailsActivity extends AppCompatActivity implements LifecycleOwner
             }
         });
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public void onClick(View view) {
+        gotoNextPage("Diagnosis");
+    }
+
+    public void onClickMentalHeath(View view) {
+        gotoNextPage("Mental Health");
+    }
+
+    void gotoNextPage(String type){
+        Intent intent = new Intent(this,SeeAllActivity.class);
+        intent.putExtra("title","Mental Health");
+        startActivity(intent);
+    }
+
+    public void onClickYoga(View view) {
+        gotoNextPage(getString(R.string.yoga_meditation));
+    }
+
+    public void onClickSportsMeditation(View view) {
+        gotoNextPage(getString(R.string.sports_medicine));
+    }
+
+    public void onClickOutdoorHealth(View view) {
+        gotoNextPage(getString(R.string.outdoor_health_tips));
     }
 }

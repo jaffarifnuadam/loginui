@@ -1,24 +1,17 @@
 package com.example.loginui.viewmodel;
 
-import android.content.Context;
-import android.content.Intent;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.loginui.R;
-import com.example.loginui.SeeAllActivity;
 import com.example.loginui.model.PlayerModel;
 
 import java.util.ArrayList;
 
-public class DetailViewModel extends ViewModel {
-
+public class SeeAllViewModel extends ViewModel {
     MutableLiveData<ArrayList<PlayerModel>> playerLiveData;
     ArrayList<PlayerModel> playerArrayList;
-    private Context context;
 
-    public DetailViewModel(){
+    public SeeAllViewModel(){
         playerLiveData = new MutableLiveData<>();
         init();
     }

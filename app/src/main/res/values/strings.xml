@@ -13,7 +13,7 @@
     <string name="login_signup">Login/SignUp</string>
     <string name="search_topics">Search Topics</string>
     <string name="filter"><u>Filter</u></string>
-    <string name="see_all"><u>See All</u></string>
+    <string name="see_all_underline"><u>See All</u></string>
     <string name="diagnostics">Diagnostics</string>
     <string name="mental_health">Mental Health</string>
     <string name="yoga_meditation"><![CDATA[Yoga & Meditation]]></string>
@@ -21,4 +21,6 @@
     <string name="podcasts_health_vlogs"><![CDATA[Podcasts & Health Vlogs]]></string>
     <string name="outdoor_health_tips">Outdoor Health Tips</string>
     <string name="title">title</string>
+
+    <string name="see_all">See All</string>
 </resources>

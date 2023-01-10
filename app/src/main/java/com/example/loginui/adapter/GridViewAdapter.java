@@ -42,7 +42,9 @@ public class GridViewAdapter extends BaseAdapter {
         LayoutInflater inflter = (LayoutInflater.from(context));;
         view = inflter.inflate(R.layout.item_details, null); // inflate the layout
         TextView textView =  view.findViewById(R.id.player_name); // get the reference of ImageView
+        TextView description =  view.findViewById(R.id.description); // get the reference of ImageView
         textView.setText(playerModelList.get(i).getName());
+        description.setText(playerModelList.get(i).getDescription());
         return view;
     }
 }

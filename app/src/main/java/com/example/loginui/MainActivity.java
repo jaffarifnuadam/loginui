@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner{
     private SliderAdapter mAdapter;
     private PlayerAdapter playerAdapter;
     List<Integer> images;
-    List<PlayerModel> playerModels;
+    List<PlayerModel> playerModelsList;
     ActivityMainBinding binding;
     final int duration = 10;
     final int pixelsToMove = 30;
@@ -67,11 +67,11 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner{
         images.add(R.drawable.virat);
         images.add(R.drawable.yuvaraj);
 
-        playerModels = new ArrayList<>();
+        playerModelsList = new ArrayList<>();
 
         //binding.viewPager.setPageTransformer(true, new HingeAnimation());
 
-        mAdapter = new SliderAdapter(this, images, playerModels);
+        mAdapter = new SliderAdapter(this, images, playerModelsList);
 
         LoginViewModel loginViewModel = new LoginViewModel(MainActivity.this,binding.mainLayout);
         binding.setViewModel(loginViewModel);
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner{
         loginViewModel.getUserMutableLiveData().observe(this, new Observer<ArrayList<PlayerModel>>() {
             @Override
             public void onChanged(ArrayList<PlayerModel> playerModels) {
+                playerModelsList = playerModels;
                 playerAdapter = new PlayerAdapter(MainActivity.this, playerModels);
                 binding.recyclerView.setAdapter(playerAdapter);
                 playerAdapter.notifyDataSetChanged();
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner{
 
             @Override
             public void run() {
-                if(playerModels.size() > 0){
+                if(playerModelsList.size() > 0){
                     if (layoutManager.findLastCompletelyVisibleItemPosition() < (playerAdapter.getItemCount() - 1)) {
                         layoutManager.smoothScrollToPosition(binding.recyclerView, new RecyclerView.State(), layoutManager.findLastCompletelyVisibleItemPosition() + 1);
                     } else if (layoutManager.findLastCompletelyVisibleItemPosition() == (playerAdapter.getItemCount() - 1)) {
