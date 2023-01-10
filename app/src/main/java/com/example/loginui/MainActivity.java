@@ -1,11 +1,15 @@
 package com.example.loginui;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,6 +17,8 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
+import android.telecom.Call;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -21,10 +27,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.loginui.adapter.DetailsAdapter;
 import com.example.loginui.adapter.PlayerAdapter;
 import com.example.loginui.adapter.SliderAdapter;
 import com.example.loginui.databinding.ActivityMainBinding;
 import com.example.loginui.model.PlayerModel;
+import com.example.loginui.model.User;
+import com.example.loginui.viewmodel.LoginViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -32,7 +41,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LifecycleOwner{
 
     private SliderAdapter mAdapter;
     private PlayerAdapter playerAdapter;
@@ -59,22 +68,36 @@ public class MainActivity extends AppCompatActivity {
         images.add(R.drawable.yuvaraj);
 
         playerModels = new ArrayList<>();
-        playerModels.add(new PlayerModel("Dhoni", getResources().getString(R.string.dhoni_description)));
-        playerModels.add(new PlayerModel("Hardik", getResources().getString(R.string.hardik_description)));
-        playerModels.add(new PlayerModel("Rahul", getResources().getString(R.string.rahul_description)));
-        playerModels.add(new PlayerModel("Virat", getResources().getString(R.string.virat_description)));
-        playerModels.add(new PlayerModel("Yuvraj", getResources().getString(R.string.yuvaraj_description)));
 
         //binding.viewPager.setPageTransformer(true, new HingeAnimation());
 
         mAdapter = new SliderAdapter(this, images, playerModels);
-        playerAdapter = new PlayerAdapter(this, playerModels);
 
+        LoginViewModel loginViewModel = new LoginViewModel(MainActivity.this,binding.mainLayout);
+        binding.setViewModel(loginViewModel);
+
+        loginViewModel.getUser().observe(MainActivity.this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if(!user.getEmail().equals("Please enter correct number") || !user.getEmail().equals("Please enter valid email")){
+                    Intent intent = new Intent(MainActivity.this,DetailsActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        loginViewModel.getUserMutableLiveData().observe(this, new Observer<ArrayList<PlayerModel>>() {
+            @Override
+            public void onChanged(ArrayList<PlayerModel> playerModels) {
+                playerAdapter = new PlayerAdapter(MainActivity.this, playerModels);
+                binding.recyclerView.setAdapter(playerAdapter);
+                playerAdapter.notifyDataSetChanged();
+            }
+        });
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.viewPager.setAdapter(mAdapter);
-        binding.recyclerView.setAdapter(playerAdapter);
 
         final LinearSnapHelper linearSnapHelper = new LinearSnapHelper();
         linearSnapHelper.attachToRecyclerView(binding.recyclerView);
@@ -84,11 +107,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-
-                if (layoutManager.findLastCompletelyVisibleItemPosition() < (playerAdapter.getItemCount() - 1)) {
-                    layoutManager.smoothScrollToPosition(binding.recyclerView, new RecyclerView.State(), layoutManager.findLastCompletelyVisibleItemPosition() + 1);
-                } else if (layoutManager.findLastCompletelyVisibleItemPosition() == (playerAdapter.getItemCount() - 1)) {
-                    layoutManager.smoothScrollToPosition(binding.recyclerView, new RecyclerView.State(), 0);
+                if(playerModels.size() > 0){
+                    if (layoutManager.findLastCompletelyVisibleItemPosition() < (playerAdapter.getItemCount() - 1)) {
+                        layoutManager.smoothScrollToPosition(binding.recyclerView, new RecyclerView.State(), layoutManager.findLastCompletelyVisibleItemPosition() + 1);
+                    } else if (layoutManager.findLastCompletelyVisibleItemPosition() == (playerAdapter.getItemCount() - 1)) {
+                        layoutManager.smoothScrollToPosition(binding.recyclerView, new RecyclerView.State(), 0);
+                    }
                 }
             }
         }, 1000, time);
@@ -104,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new SliderTimer(), 1000, 3000);
+
+
 
         binding.btnContinueEmail.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -43,6 +43,12 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.Holder>{
         return playerModels.size();
     }
 
+    public void updateUserList(final List<PlayerModel> userArrayList) {
+        this.playerModels.clear();
+        this.playerModels = userArrayList;
+        notifyDataSetChanged();
+    }
+
     public class Holder extends RecyclerView.ViewHolder{
 
         TextView txtPlayerName;

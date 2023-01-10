@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.loginui.R;
 import com.example.loginui.model.PlayerModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.Holder>{
@@ -30,6 +31,12 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.Holder>{
         View view = null;
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_details, parent, false);
         return new DetailsAdapter.Holder(view);
+    }
+
+    public void updateUserList(final ArrayList<PlayerModel> userArrayList) {
+        this.playerModels.clear();
+        this.playerModels = userArrayList;
+        notifyDataSetChanged();
     }
 
     @Override

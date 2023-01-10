@@ -49,7 +49,6 @@ public class SliderAdapter extends PagerAdapter {
         TextView textView = view.findViewById(R.id.player_name);
         RelativeLayout linearLayout = view.findViewById(R.id.linearLayout);
 
-        textView.setText(colorName.get(position).getName());
         linearLayout.setBackground(ContextCompat.getDrawable(context, color.get(position)));
 
         ViewPager viewPager = (ViewPager) container;

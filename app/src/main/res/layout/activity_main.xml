@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.loginui.viewmodel.LoginViewModel" />
+    </data>
+
     <RelativeLayout
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
@@ -86,6 +92,7 @@
                             android:layout_toEndOf="@id/view"
                             android:background="@null"
                             android:ems="10"
+                            android:text="@={viewModel.email}"
                             android:textColorHint="@color/white"
                             android:hint="@string/enter_your_mobile_number"
                             android:inputType="phone"
@@ -140,6 +147,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="4dp"
                         android:layout_weight="0.2"
+                        android:onClick="@{()-> viewModel.onLoginClicked()}"
                         android:background="@drawable/my_button_bg"
                         android:src="@drawable/fast_forward"
                         app:tint="@color/white" />
