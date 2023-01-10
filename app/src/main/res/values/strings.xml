@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">LoginUI</string>
+    <string name="continue_google">Continue with Google</string>
+    <string name="continue_mobile">Continue with Mobile Number</string>
+    <string name="enter_email">Please enter your email</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
+
+    <string name="dhoni_description">Mahendra Singh Dhoni is an Indian former international cricketer who was captain of the Indian national cricket team in limited-overs formats from 2007 to 2017 and in Test cricket from 2008 to 2014</string>
+    <string name="hardik_description">Hardik Himanshu Pandya is an Indian international cricketer. An All-rounder who bats right-handed and bowls right-arm fast-medium, Pandya has played in all 3 formats for India.</string>
+    <string name="rahul_description">Kannanur Lokesh Rahul is an Indian international cricketer who currently is the vice-captain of the Indian cricket team in test cricket. He is a Right-handed batter and occasional wicketkeeper.</string>
+    <string name="virat_description">Virat Kohli is an Indian international cricketer and former captain of the India national team. He is widely regarded as one of the greatest batsmen in modern cricket.</string>
+    <string name="yuvaraj_description">Yuvraj Singh is a former Indian international cricketer who played in all formats of the game. He is an all-rounder who batted left-handed in the middle order and bowled slow left-arm orthodox.</string>
+    <string name="login_signup">Login/SignUp</string>
+    <string name="search_topics">Search Topics</string>
+    <string name="filter"><u>Filter</u></string>
+    <string name="see_all"><u>See All</u></string>
+    <string name="diagnostics">Diagnostics</string>
+    <string name="mental_health">Mental Health</string>
+    <string name="yoga_meditation"><![CDATA[Yoga & Meditation]]></string>
+    <string name="sports_medicine">Sports Medicine</string>
+    <string name="podcasts_health_vlogs"><![CDATA[Podcasts & Health Vlogs]]></string>
+    <string name="outdoor_health_tips">Outdoor Health Tips</string>
+</resources>
